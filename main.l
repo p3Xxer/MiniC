@@ -105,7 +105,7 @@ tab [\t]
 line [\n]
 at [@]
 char \'.\'
-string \"(.^([%d]|[%f]|[%s]|[%c]))\"
+string \"(.[^%])*\"
 
 %%
 {space}* {}
@@ -274,6 +274,9 @@ int main(){
         if(scan==41 && mlc==0){
             inserttoLL("FLOAT CONSTANT", yytext, line_no);
         }
+        if(scan == 53 && mlc == 0){
+            inserttoLL("TYPE_SPEC", yytext, line_no);
+        }
         if(scan==54 && mlc==0){
             inserttoLL("1D ARRAY", yytext, line_no);
         }
@@ -293,6 +296,9 @@ int main(){
             inserttoLL("STRING CONSTANT", yytext, line_no);
         }
         scan = yylex();
+    }
+    if(mlc==1){
+        printf("unmatched comment starting at line %d", mlcline);
     }
     dis();
     return 0;
