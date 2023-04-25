@@ -2285,11 +2285,12 @@ int main(){
     main_list->tail = NULL;
     main_list->count = 0;
     int scan, slcline = 0, mlcline = 0, dq = 0;
-    yyin = fopen("input.c", "r");
+    yyin = fopen("input.txt", "r");
     scan = yylex();
     while(scan){
         if(scan>=26 && scan<=38 || scan==1 || scan ==2 || scan==3){
             inserttoLL("KEYWORD",yytext,line_no);
+            break;
         }
         if(scan==39){
             inserttoLL("IDENTIFIER",yytext,line_no);
@@ -2298,6 +2299,7 @@ int main(){
             inserttoLL("OPERATOR",yytext,line_no);
         }
     }
+    dis();
     return 0;
 }
 
