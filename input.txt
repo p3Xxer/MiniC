@@ -1,1 +1,6 @@
-for
+int a;
+//HI RAHIL
+/* YOU
+RAHIL
+*/
+int b;

@@ -112,7 +112,7 @@ string \"(.^([%d]|[%f]|[%s]|[%c]))\"
 {tab}* {}
 {string} return STRING_CONST;
 {char} return CHAR_CONST;
-{line} {line_no++;} {}
+{line} {line_no++;}
 
 break return BREAK;
 case return CASE;
@@ -135,7 +135,7 @@ printf return PRINTF;
 
 [+-][0-9]{digit}*(\.{digit}+)? return SIGNED_CONST;
 
-"//".* return SLCOMMENT;
+\/\/ return SLCOMMENT;
 "/*" return MLCOMMENT_S;
 "*/" return MLCOMMENT_E;
 
@@ -213,20 +213,86 @@ int main(){
     main_list->head = NULL;
     main_list->tail = NULL;
     main_list->count = 0;
-    int scan, slcline = 0, mlcline = 0, dq = 0;
+    int scan, slcline=0, mlc=0, mlcline=0, dq=0, dqline=0;
     yyin = fopen("input.txt", "r");
     scan = yylex();
     while(scan){
-        if(scan>=26 && scan<=38 || scan==1 || scan ==2 || scan==3){
-            inserttoLL("KEYWORD",yytext,line_no);
-            break;
+        if(line_no==slcline){
+            scan = yylex();
+            continue;
         }
-        if(scan==39){
+        if(line_no!=dqline && dqline!=0){
+            if(dq%2!=0){
+                printf("incomplete string");
+            }
+            dq = 0;
+        }
+        if((scan>=26 && scan<=38 || scan==1 || scan ==2 || scan==3)&& mlc ==0){
+            inserttoLL("KEYWORD",yytext,line_no);
+        }
+        if(scan==39 && mlc==0){
             inserttoLL("IDENTIFIER",yytext,line_no);
         }
-        if((scan>=4 && scan<=17) || scan==49){
+        if(scan==43){
+            inserttoLL("SINGLE LINE COMMENT",yytext,line_no);
+            slcline = line_no;
+        }
+        if(scan == 44 && mlc == 0){
+            inserttoLL("MULTI LINE COMMENT START",yytext,line_no);
+            mlcline = line_no;
+            mlc = 1;
+        }
+        if(scan==45 && mlc == 0){
+            printf("unmatched comment");
+        }
+        if(scan == 45 && mlc == 1){
+            mlc = 0;
+            inserttoLL("MULTI LINE COMMENT END",yytext,line_no);
+        }
+        if(((scan>=4 && scan<=17) || scan==49) && mlc == 0){
             inserttoLL("OPERATOR",yytext,line_no);
         }
+        if(((scan>=18 && scan<=25) || scan==57 || scan ==58) && mlc == 0){
+            if(scan==57){
+                dq++;
+                dqline = line_no;
+            }
+            inserttoLL("SPECIAL SYMBOL",yytext,line_no);
+        }
+        if(scan==48 && mlc ==0){
+            inserttoLL("HEADER", yytext, line_no);
+        }
+        if(scan==47 && mlc==0){
+            inserttoLL("IDENTIFIER", yytext, line_no);
+        }
+        if(scan==37 && mlc == 0){
+            inserttoLL("PRE_DEFINED_FUNCTION", yytext, line_no);
+        }
+        if(scan==40 && mlc == 0){
+            inserttoLL("INTEGER CONSTANT", yytext, line_no);
+        }
+        if(scan==41 && mlc==0){
+            inserttoLL("FLOAT CONSTANT", yytext, line_no);
+        }
+        if(scan==54 && mlc==0){
+            inserttoLL("1D ARRAY", yytext, line_no);
+        }
+        if(scan==56 && mlc==0){
+            inserttoLL("2D ARRAY", yytext, line_no);
+        }
+        if(scan==55 && mlc==0){
+            inserttoLL("USER DEFINED FUNCTION", yytext, line_no);
+        }
+        if(scan==50 && mlc == 0){
+            inserttoLL("CHARACTER CONSTANT", yytext, line_no);
+        }
+        if(scan==51 && mlc == 0){
+            inserttoLL("SIGNED CONSTANT", yytext, line_no);
+        }
+        if(scan==52 && mlc == 0){
+            inserttoLL("STRING CONSTANT", yytext, line_no);
+        }
+        scan = yylex();
     }
     dis();
     return 0;
