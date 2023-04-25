@@ -168,6 +168,8 @@ printf return PRINTF;
 "\"" return DQ;
 "(" return LPAREN;
 ")" return RPAREN;
+"{" return LBRACE;
+"}" return RBRACE;
 "[" return LBRACKET;
 "]" return RBRACKET;
 "#" return HASH;
@@ -208,13 +210,13 @@ void dis(){
     }
 }
 
-int main(){
+int main(int argc, char *argv[]){
     main_list = (struct ll *)malloc(sizeof(struct ll));
     main_list->head = NULL;
     main_list->tail = NULL;
     main_list->count = 0;
     int scan, slcline=0, mlc=0, mlcline=0, dq=0, dqline=0;
-    yyin = fopen("input.txt", "r");
+    yyin = fopen(argv[1], "r");
     scan = yylex();
     while(scan){
         if(line_no==slcline){
