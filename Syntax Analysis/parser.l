@@ -1,8 +1,8 @@
 %{
 
-    #include <stdio.h>
-    #include <string.h> 
+    #include "y.tab.h"
     int scan, slcline=0, mlc=0, mlcline=0, dq=0, dqline=0;
+    int line_no=1;
 
 %}
 
@@ -26,7 +26,7 @@ string \".*\"
     //should yacc throw error here?
     printf("Unmatched Comment");}else{exit(0);}}
 
-int {if(mlc==0){return INT;}}
+int {if(mlc==0){printf("in int\n"); return INT;}}
 float {if(mlc==0){return FLOAT;}}
 char {if(mlc==0){return CHAR;}}
 
@@ -44,7 +44,7 @@ while {if(mlc==0){return WHILE;}}
 
 printf {if(mlc==0);return PRINTF;}
 
-{alpha}({alpha}|{digit}|{und})* {if(mlc==0){return ID;}}
+{alpha}({alpha}|{digit}|{und})* {if(mlc==0){printf("in id");return ID;}}
 
 [+-][0-9]{digit}*(\.{digit}+)? {if(mlc==0){return SIGNED_CONST;}}
 
@@ -78,16 +78,14 @@ printf {if(mlc==0);return PRINTF;}
 
 ";" {if(mlc==0){return SEMICOLON;}}
 "," {if(mlc==0){return COMMA;}}
-"(" {if(mlc==0){return LPAREN;}}
-")" {if(mlc==0){return RPAREN;}}
-"{" {if(mlc==0){return LBRACE;}}
-"}" {if(mlc==0){return RBRACE;}}
+"(" {if(mlc==0){printf("in left paren");return LPAREN;}}
+")" {if(mlc==0){printf("in right paren\n");return RPAREN;}}
+"{" {if(mlc==0){printf("in left brace\n");return LBRACE;}}
+"}" {if(mlc==0){printf("in right brace\n");return RBRACE;}}
 "[" {if(mlc==0){return LBRACKET;}}
 "]" {if(mlc==0){return RBRACKET;}}
 "#" {if(mlc==0){return HASH;}}
 "\"" {if(mlc==0){return DQ;}}
-
-"main"[ ]*\([ ]*\)[ ]* {if(mlc==0){return MAIN;}}
 
 "%d"|"%f"|"%s"|"%c" {if(mlc==0){return TYPE_SPEC;}}
 
@@ -97,11 +95,9 @@ printf {if(mlc==0);return PRINTF;}
 
 {alpha}({alpha}|{digit}|{und})*\[{digit}*\] {if(mlc==0){return ARR;}}
 {alpha}({alpha}|{digit}|{und})*\[{digit}*\]\[{digit}*\] {if(mlc==0){return ARR2D;}}
-{alpha}({alpha}|{digit}|{und})*\(({alpha}|{digit}|{und}|{space})*\) {if(mlc==0){REJECT; return FUNC;}}
+{alpha}({alpha}|{digit}|{und})*\(({alpha}|{digit}|{und}|{space})*\) {if(mlc==0){printf("in fun");REJECT;return FUNC;}}
 
 %%
-
-yywrap()
-{
-    return(1);
+int yywrap(){
+return(1);
 }

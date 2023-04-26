@@ -1,8 +1,8 @@
 %{
-    #include "lex.yy.c"
     #include<stdio.h>
     #include<stdlib.h>
     #include<string.h>
+    extern FILE* yyin;
 %}
 
 %left ASSIGN
@@ -11,7 +11,7 @@
 %left EQ NE
 %left LT LE GT GE
 %left PLUS MINUS
-%left MULT DIV MOD 
+%left MUL DIV MOD 
 %left NOT
 %token STRING_CONST INT_CONST FLOAT_CONST CHAR_CONST SIGNED_CONST
 %token INT FLOAT CHAR 
@@ -21,13 +21,16 @@
 %token SEMICOLON COMMA LPAREN RPAREN LBRACE RBRACE LBRACKET RBRACKET
 %token HASH DQ
 %token ARR ARR2D FUNC TYPE_SPEC
-%start begin
 
 %%
 
-begin : Func_Decl begin | Func_Decl ;
+S: begin
 
-Type : INT | FLOAT | CHAR | VOID ;
+begin : Func_Decl begin |  
+      Func_Decl ;
+
+Type : INT {printf("my name is rahil\n");}
+     | FLOAT | CHAR | VOID ;
 
 Func_Decl : Type ID LPAREN Para_List RPAREN LBRACE Stmt_List RBRACE 
             | Type ID LPAREN RPAREN LBRACE Stmt_List RBRACE ;
@@ -36,7 +39,7 @@ Para_List : Para COMMA Para_List | Para ;
 
 Para : Type ID ;
 
-Stmt_List : Stmt Stmt_List | Stmt | LBRACE Stmt_List RBRACE ;
+Stmt_List : Stmt Stmt_List | Stmt | LBRACE Stmt_List RBRACE | ;
 
 Stmt : Decl | Control | Return | SEMICOLON | Print | Func_Call | Arr_Decl ;
 
@@ -62,7 +65,7 @@ Var_List : ID | ID COMMA Var_List
 Expr : ID 
     | Expr PLUS Expr 
     | Expr MINUS Expr 
-    | Expr MULT Expr
+    | Expr MUL Expr
     | Expr DIV Expr
     | Expr MOD Expr
     | Expr LAND Expr
@@ -78,7 +81,7 @@ Expr : ID
     ;
 
 Assgn : ID ASSIGN Expr
-    | ID 
+      | ID
     | ID ASSIGN Expr COMMA Assgn
 	| ID COMMA Assgn
     ;
@@ -88,9 +91,9 @@ Decl : Type Assgn SEMICOLON
 ;
 
 
-Func_Call : Type ID ASSIGN ID LPAREN Var_List RPAREN SEMICOLON
-		| ID LPAREN Var_List RPAREN
-		| ID ASSIGN ID LPAREN Var_List RPAREN SEMICOLON
+Func_Call : Type ID ASSIGN FUNC ID LPAREN Var_List RPAREN SEMICOLON
+		| FUNC ID LPAREN Var_List RPAREN
+		| ID ASSIGN FUNC ID LPAREN Var_List RPAREN SEMICOLON
         ;
 
 Arr_Decl : Type ARR SEMICOLON
@@ -102,16 +105,16 @@ Arr_Decl : Type ARR SEMICOLON
 Const_List : int_list | float_list | char_list
 ;
 
-Const_List2 : LBRACE Const_List RBRACE | LBRACE Const_List RBRACE SEMICOLON Const_List2
+Const_List2 : LBRACE Const_List RBRACE | LBRACE Const_List RBRACE COMMA Const_List2
 ;
 
-int_list : INT_CONST COMMA int_list | INT_CONST | ID
+int_list : INT_CONST COMMA int_list | INT_CONST 
 ;
 
-float_list : FLOAT_CONST COMMA float_list | FLOAT_CONST | ID
+float_list : FLOAT_CONST COMMA float_list | FLOAT_CONST 
 ;
 
-char_list : CHAR_CONST COMMA char_list | CHAR_CONST | ID
+char_list : CHAR_CONST COMMA char_list | CHAR_CONST
 ;
 
 %%
@@ -125,5 +128,8 @@ int main(int argc , char *argv[]){
     else{
         printf("Parsing Failed\n");
     }
-    ffclose(yyin);
+}
+
+void yyerror(){
+printf("Invalid statement");
 }
