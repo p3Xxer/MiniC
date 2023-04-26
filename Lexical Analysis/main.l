@@ -137,7 +137,7 @@ printf return PRINTF;
 
 [+-][0-9]{digit}*(\.{digit}+)? return SIGNED_CONST;
 
-\/\/.* {printf("%s\n", yytext); return SLCOMMENT;}
+\/\/.* return SLCOMMENT;
 "/*" return MLCOMMENT_S;
 "*/" return MLCOMMENT_E;
 
@@ -161,7 +161,6 @@ printf return PRINTF;
 "," return COMMA;
 
 "#include"[ ]*"<stdio.h>" return HEADER;
-"main"[ ]*\([ ]*\)[ ]* return MAIN;
 
 {digit}+ return INT_CONST;
 {digit}+\.{digit}+ return FLOAT_CONST;
@@ -182,7 +181,6 @@ printf return PRINTF;
     inserttoLL("FUNC", yytext, line_no);
     REJECT;
     return FUNC;}
-
 %%
 
 struct node *create_node(char *lexeme, char *token, int line_no){
