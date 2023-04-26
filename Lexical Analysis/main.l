@@ -105,7 +105,7 @@ tab [\t]
 line [\n]
 at [@]
 char \'.\'
-string \"(.[^%])*\"
+string "@"
 
 %%
 {space}* {}
@@ -113,6 +113,7 @@ string \"(.[^%])*\"
 {string} return STRING_CONST;
 {char} return CHAR_CONST;
 {line} {line_no++;}
+
 
 break return BREAK;
 case return CASE;
@@ -135,7 +136,7 @@ printf return PRINTF;
 
 [+-][0-9]{digit}*(\.{digit}+)? return SIGNED_CONST;
 
-\/\/ return SLCOMMENT;
+\/\/.* {printf("%s\n", yytext); return SLCOMMENT;}
 "/*" return MLCOMMENT_S;
 "*/" return MLCOMMENT_E;
 
@@ -204,10 +205,14 @@ void inserttoLL(char* lexeme, char* token, int line_no){
 
 void dis(){
     struct node *temp = main_list->head;
+    printf("--------------------------------------------------------------------\n");
+    printf("Line No.\tLexeme\t\t\tToken\n");
+    printf("--------------------------------------------------------------------\n");
     while(temp != NULL){
-        printf("%s %s %d\n", temp->lexeme, temp->token, temp->line_no);
+        printf("%d\t\t%s\t\t\t%s\n", temp->line_no, temp->lexeme, temp->token);
         temp = temp->next;
     }
+    printf("--------------------------------------------------------------------\n");
 }
 
 int main(int argc, char *argv[]){
@@ -219,28 +224,30 @@ int main(int argc, char *argv[]){
     yyin = fopen(argv[1], "r");
     scan = yylex();
     while(scan){
+        /*
         if(line_no==slcline){
             scan = yylex();
             continue;
         }
+        */
         if(line_no!=dqline && dqline!=0){
             if(dq%2!=0){
                 printf("incomplete string");
             }
             dq = 0;
         }
-        if((scan>=26 && scan<=38 || scan==1 || scan ==2 || scan==3)&& mlc ==0){
+        if((scan>=26 && scan<=36 ||scan==38|| scan==1 || scan ==2 || scan==3)&& mlc ==0){
             inserttoLL("KEYWORD",yytext,line_no);
         }
         if(scan==39 && mlc==0){
             inserttoLL("IDENTIFIER",yytext,line_no);
         }
         if(scan==43){
-            inserttoLL("SINGLE LINE COMMENT",yytext,line_no);
-            slcline = line_no;
+            //inserttoLL("SINGLE LINE COMMENT",yytext,line_no);
+            //slcline = line_no;
         }
         if(scan == 44 && mlc == 0){
-            inserttoLL("MULTI LINE COMMENT START",yytext,line_no);
+            //inserttoLL("MULTI LINE COMMENT START",yytext,line_no);
             mlcline = line_no;
             mlc = 1;
         }
@@ -249,7 +256,7 @@ int main(int argc, char *argv[]){
         }
         if(scan == 45 && mlc == 1){
             mlc = 0;
-            inserttoLL("MULTI LINE COMMENT END",yytext,line_no);
+            //inserttoLL("MULTI LINE COMMENT END",yytext,line_no);
         }
         if(((scan>=4 && scan<=17) || scan==49) && mlc == 0){
             inserttoLL("OPERATOR",yytext,line_no);
@@ -261,41 +268,84 @@ int main(int argc, char *argv[]){
             }
             inserttoLL("SPECIAL SYMBOL",yytext,line_no);
         }
-        if(scan==48 && mlc ==0){
-            inserttoLL("HEADER", yytext, line_no);
-        }
-        if(scan==47 && mlc==0){
-            inserttoLL("IDENTIFIER", yytext, line_no);
-        }
-        if(scan==37 && mlc == 0){
-            inserttoLL("PRE_DEFINED_FUNCTION", yytext, line_no);
-        }
-        if(scan==40 && mlc == 0){
-            inserttoLL("INTEGER CONSTANT", yytext, line_no);
-        }
-        if(scan==41 && mlc==0){
-            inserttoLL("FLOAT CONSTANT", yytext, line_no);
-        }
-        if(scan == 53 && mlc == 0){
-            inserttoLL("TYPE_SPEC", yytext, line_no);
-        }
-        if(scan==54 && mlc==0){
-            inserttoLL("1D ARRAY", yytext, line_no);
-        }
-        if(scan==56 && mlc==0){
-            inserttoLL("2D ARRAY", yytext, line_no);
-        }
-        if(scan==55 && mlc==0){
-            inserttoLL("USER DEFINED FUNCTION", yytext, line_no);
-        }
-        if(scan==50 && mlc == 0){
-            inserttoLL("CHARACTER CONSTANT", yytext, line_no);
-        }
-        if(scan==51 && mlc == 0){
-            inserttoLL("SIGNED CONSTANT", yytext, line_no);
-        }
-        if(scan==52 && mlc == 0){
-            inserttoLL("STRING CONSTANT", yytext, line_no);
+        if(mlc == 0){
+            switch(scan){
+                case 37:
+                    inserttoLL("PRE_DEFINED_FUNCTION", yytext, line_no);
+                    break;
+                case 40:
+                    inserttoLL("INTEGER CONSTANT", yytext, line_no);
+                    break;
+                case 41:
+                    inserttoLL("FLOAT CONSTANT", yytext, line_no);
+                    break;
+                case 47:
+                    inserttoLL("IDENTIFIER", yytext, line_no);
+                    break;
+                case 48:
+                    inserttoLL("HEADER", yytext, line_no);
+                    break;
+                case 50:
+                    inserttoLL("CHARACTER CONSTANT", yytext, line_no);
+                    break;
+                case 51:
+                    inserttoLL("SIGNED CONSTANT", yytext, line_no);
+                    break;
+                case 52:
+                    inserttoLL("STRING CONSTANT", yytext, line_no);
+                    break;
+                case 53:
+                    inserttoLL("TYPE_SPEC", yytext, line_no);
+                    break;
+                case 54:
+                    inserttoLL("1D ARRAY", yytext, line_no);
+                    break;
+                case 56:
+                    inserttoLL("2D ARRAY", yytext, line_no);
+                    break;
+                case 55:
+                    inserttoLL("FUNCTION", yytext, line_no);
+                    break;
+
+            }
+            /*
+            if(scan==48 && mlc ==0){
+                inserttoLL("HEADER", yytext, line_no);
+            }
+            if(scan==47 && mlc==0){
+                inserttoLL("IDENTIFIER", yytext, line_no);
+            }
+            if(scan==37 && mlc == 0){
+                inserttoLL("PRE_DEFINED_FUNCTION", yytext, line_no);
+            }
+            if(scan==40 && mlc == 0){
+                inserttoLL("INTEGER CONSTANT", yytext, line_no);
+            }
+            if(scan==41 && mlc==0){
+                inserttoLL("FLOAT CONSTANT", yytext, line_no);
+            }
+            if(scan == 53 && mlc == 0){
+                inserttoLL("TYPE_SPEC", yytext, line_no);
+            }
+            if(scan==54 && mlc==0){
+                inserttoLL("1D ARRAY", yytext, line_no);
+            }
+            if(scan==56 && mlc==0){
+                inserttoLL("2D ARRAY", yytext, line_no);
+            }
+            if(scan==55 && mlc==0){
+                inserttoLL("USER DEFINED FUNCTION", yytext, line_no);
+            }
+            if(scan==50 && mlc == 0){
+                inserttoLL("CHARACTER CONSTANT", yytext, line_no);
+            }
+            if(scan==51 && mlc == 0){
+                inserttoLL("SIGNED CONSTANT", yytext, line_no);
+            }
+            if(scan==52 && mlc == 0){
+                inserttoLL("STRING CONSTANT", yytext, line_no);
+            }
+            */
         }
         scan = yylex();
     }

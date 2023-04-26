@@ -1,11 +1,8 @@
-#include<stdio.h>
-void foo()
-{
-	return;
-}
+#include <stdio.h>
+
 void main()
 {
-	int a;
-	foo();
-	//user defined function
+	printf("hi");
+	printf("hello %d", 1);
+	printf("%d",2);
 }
