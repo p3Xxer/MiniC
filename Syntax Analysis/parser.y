@@ -40,13 +40,13 @@ Stmt_List : Stmt Stmt_List | Stmt | LBRACE Stmt_List RBRACE ;
 
 Stmt : Decl | Control | Return | SEMICOLON | Print | Func_Call | Arr_Decl ;
 
-Control : If | While | For ;
+Control :  While | For ;
 
-Return : RETURN ID SEMICOLON | RETURN CONST SEMICOLON | RETURN SEMICOLON;
+Return : RETURN ID SEMICOLON | RETURN Const SEMICOLON | RETURN SEMICOLON;
 
 Const : INT_CONST | FLOAT_CONST | CHAR_CONST | SIGNED_CONST ;
 
-For : FOR LPAREN Decl Expr SEMICOLON Assign RPAREN LBRACE Stmt_List RBRACE;
+For : FOR LPAREN Decl Expr SEMICOLON ASSIGN RPAREN LBRACE Stmt_List RBRACE;
 
 While : WHILE LPAREN Expr RPAREN LBRACE Stmt_List RBRACE ;
 

@@ -97,7 +97,7 @@ printf {if(mlc==0);return PRINTF;}
 
 {alpha}({alpha}|{digit}|{und})*\[{digit}*\] {if(mlc==0){return ARR;}}
 {alpha}({alpha}|{digit}|{und})*\[{digit}*\]\[{digit}*\] {if(mlc==0){return ARR2D;}}
-{alpha}({alpha}|{digit}|{und})*\(({alpha}|{digit}|{und}|{space})*\) {if(mlc==0){return FUNC;}}
+{alpha}({alpha}|{digit}|{und})*\(({alpha}|{digit}|{und}|{space})*\) {if(mlc==0){REJECT; return FUNC;}}
 
 %%
 

@@ -80,6 +80,7 @@
 
     /* GLOBAL VARIABLE */
     int line_no = 1;
+    int scan, slcline=0, mlc=0, mlcline=0, dq=0, dqline=0;
 
     struct node{
         char lexeme[100];
@@ -177,7 +178,10 @@ printf return PRINTF;
 
 {alpha}({alpha}|{digit}|{und})*\[{digit}*\] return ARR;
 {alpha}({alpha}|{digit}|{und})*\[{digit}*\]\[{digit}*\] return ARR2D;
-{alpha}({alpha}|{digit}|{und})*\(({alpha}|{digit}|{und}|{space})*\) return FUNC;
+{alpha}({alpha}|{digit}|{und})*\(({alpha}|{digit}|{und}|{space})*\) {
+    inserttoLL("FUNC", yytext, line_no);
+    REJECT;
+    return FUNC;}
 
 %%
 
@@ -220,7 +224,6 @@ int main(int argc, char *argv[]){
     main_list->head = NULL;
     main_list->tail = NULL;
     main_list->count = 0;
-    int scan, slcline=0, mlc=0, mlcline=0, dq=0, dqline=0;
     yyin = fopen(argv[1], "r");
     scan = yylex();
     while(scan){
