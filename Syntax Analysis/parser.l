@@ -1,6 +1,7 @@
 %{
-    #include "y.tab.h"
 
+    #include <stdio.h>
+    #include <string.h> 
     int scan, slcline=0, mlc=0, mlcline=0, dq=0, dqline=0;
 
 %}
@@ -13,7 +14,7 @@ tab [\t]
 line [\n]
 at [@]
 char \'.\'
-string "@"
+string \".*\"
 
 %%
 {space}* {}
@@ -57,6 +58,7 @@ printf {if(mlc==0);return PRINTF;}
     }
 }
 
+
 ">" {if(mlc==0){return GT;}}
 "<" {if(mlc==0){return LT;}}
 ">=" {if(mlc==0){return GE;}}
@@ -97,5 +99,9 @@ printf {if(mlc==0);return PRINTF;}
 {alpha}({alpha}|{digit}|{und})*\[{digit}*\]\[{digit}*\] {if(mlc==0){return ARR2D;}}
 {alpha}({alpha}|{digit}|{und})*\(({alpha}|{digit}|{und}|{space})*\) {if(mlc==0){return FUNC;}}
 
-
 %%
+
+yywrap()
+{
+    return(1);
+}

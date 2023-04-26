@@ -982,272 +982,272 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 117 "main.l"
+#line 118 "main.l"
 return BREAK;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 118 "main.l"
+#line 119 "main.l"
 return CASE;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 119 "main.l"
+#line 120 "main.l"
 return DEFAULT;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 120 "main.l"
+#line 121 "main.l"
 return CHAR;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 121 "main.l"
+#line 122 "main.l"
 return CONTINUE;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 122 "main.l"
+#line 123 "main.l"
 return ELSE;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 123 "main.l"
+#line 124 "main.l"
 return FLOAT;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 124 "main.l"
+#line 125 "main.l"
 return FOR;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 125 "main.l"
+#line 126 "main.l"
 return IF;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 126 "main.l"
+#line 127 "main.l"
 return INT;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 127 "main.l"
+#line 128 "main.l"
 return RETURN;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 128 "main.l"
+#line 129 "main.l"
 return SWITCH;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 129 "main.l"
+#line 130 "main.l"
 return VOID;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 130 "main.l"
+#line 131 "main.l"
 return WHILE;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 132 "main.l"
+#line 133 "main.l"
 return PRINTF;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 134 "main.l"
+#line 135 "main.l"
 return ID;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 136 "main.l"
+#line 137 "main.l"
 return SIGNED_CONST;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 138 "main.l"
+#line 139 "main.l"
 {printf("%s\n", yytext); return SLCOMMENT;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 139 "main.l"
+#line 140 "main.l"
 return MLCOMMENT_S;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 140 "main.l"
+#line 141 "main.l"
 return MLCOMMENT_E;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 142 "main.l"
+#line 143 "main.l"
 return GT;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 143 "main.l"
+#line 144 "main.l"
 return LS;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 144 "main.l"
+#line 145 "main.l"
 return LE;
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 145 "main.l"
+#line 146 "main.l"
 return GE;
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 146 "main.l"
+#line 147 "main.l"
 return EQ;
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 147 "main.l"
+#line 148 "main.l"
 return NE;
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 148 "main.l"
+#line 149 "main.l"
 return LAND;
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 149 "main.l"
+#line 150 "main.l"
 return LOR;
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 150 "main.l"
+#line 151 "main.l"
 return NOT;
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 151 "main.l"
+#line 152 "main.l"
 return ASSIGN;
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 152 "main.l"
+#line 153 "main.l"
 return PLUS;
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 153 "main.l"
+#line 154 "main.l"
 return MINUS;
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 154 "main.l"
+#line 155 "main.l"
 return MULT;
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 155 "main.l"
+#line 156 "main.l"
 return DIV;
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 156 "main.l"
+#line 157 "main.l"
 return MOD;
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 158 "main.l"
+#line 159 "main.l"
 return SEMICOLON;
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 159 "main.l"
+#line 160 "main.l"
 return COMMA;
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 161 "main.l"
+#line 162 "main.l"
 return HEADER;
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 162 "main.l"
+#line 163 "main.l"
 return MAIN;
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 164 "main.l"
+#line 165 "main.l"
 return INT_CONST;
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 165 "main.l"
+#line 166 "main.l"
 return FLOAT_CONST;
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 167 "main.l"
+#line 168 "main.l"
 return TYPE_SPEC;
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 168 "main.l"
+#line 169 "main.l"
 return DQ;
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 169 "main.l"
+#line 170 "main.l"
 return LPAREN;
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 170 "main.l"
+#line 171 "main.l"
 return RPAREN;
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 171 "main.l"
+#line 172 "main.l"
 return LBRACE;
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 172 "main.l"
+#line 173 "main.l"
 return RBRACE;
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 173 "main.l"
+#line 174 "main.l"
 return LBRACKET;
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 174 "main.l"
+#line 175 "main.l"
 return RBRACKET;
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 175 "main.l"
+#line 176 "main.l"
 return HASH;
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 177 "main.l"
+#line 178 "main.l"
 return ARR;
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 178 "main.l"
+#line 179 "main.l"
 return ARR2D;
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 179 "main.l"
+#line 180 "main.l"
 return FUNC;
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 181 "main.l"
+#line 182 "main.l"
 ECHO;
 	YY_BREAK
 #line 1253 "lex.yy.c"
@@ -2255,7 +2255,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 181 "main.l"
+#line 182 "main.l"
 
 
 struct node *create_node(char *lexeme, char *token, int line_no){
