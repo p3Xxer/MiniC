@@ -62,7 +62,7 @@ Para_List : Para_List COMMA Para | Para
 Para : Type ID 
     ;
 
-Stmt_List : Stmt Stmt_List | Stmt | LBRACE Stmt_List RBRACE
+Stmt_List : Stmt Stmt_List | Stmt | LBRACE Stmt_List RBRACE | LBRACE Stmt_List RBRACE Stmt_List
     ;
 
 Stmt : Print | Return | Func_Call | Brk_cnt | Arr_Decl | For_stmt | Expr | While_stmt | If_stmt | Assgn SEMICOLON | Decl SEMICOLON | SEMICOLON 
