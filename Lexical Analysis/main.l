@@ -237,7 +237,7 @@ int main(int argc, char *argv[]){
             }
             dq = 0;
         }
-        if((scan>=26 && scan<=36 ||scan==38|| scan==1 || scan ==2 || scan==3)&& mlc ==0){
+        if((scan>=26 && scan<=36 ||scan==38|| scan==1 || scan == 2 || scan==3)&& mlc ==0){
             inserttoLL("KEYWORD",yytext,line_no);
         }
         if(scan==39 && mlc==0){
