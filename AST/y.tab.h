@@ -69,45 +69,48 @@ extern int yydebug;
     DIV = 270,                     /* DIV  */
     MOD = 271,                     /* MOD  */
     NOT = 272,                     /* NOT  */
-    STRING_CONST = 273,            /* STRING_CONST  */
-    INT_CONST = 274,               /* INT_CONST  */
-    FLOAT_CONST = 275,             /* FLOAT_CONST  */
-    CHAR_CONST = 276,              /* CHAR_CONST  */
-    SIGNED_CONST = 277,            /* SIGNED_CONST  */
-    INT = 278,                     /* INT  */
-    FLOAT = 279,                   /* FLOAT  */
-    CHAR = 280,                    /* CHAR  */
-    IF = 281,                      /* IF  */
-    ELSE = 282,                    /* ELSE  */
-    WHILE = 283,                   /* WHILE  */
-    FOR = 284,                     /* FOR  */
-    RETURN = 285,                  /* RETURN  */
-    BREAK = 286,                   /* BREAK  */
-    CONTINUE = 287,                /* CONTINUE  */
-    CASE = 288,                    /* CASE  */
-    DEFAULT = 289,                 /* DEFAULT  */
-    SWITCH = 290,                  /* SWITCH  */
-    VOID = 291,                    /* VOID  */
-    MAIN = 292,                    /* MAIN  */
-    PRINTF = 293,                  /* PRINTF  */
-    ID = 294,                      /* ID  */
-    COLON = 295,                   /* COLON  */
-    SEMICOLON = 296,               /* SEMICOLON  */
-    COMMA = 297,                   /* COMMA  */
-    LPAREN = 298,                  /* LPAREN  */
-    RPAREN = 299,                  /* RPAREN  */
-    LBRACE = 300,                  /* LBRACE  */
-    RBRACE = 301,                  /* RBRACE  */
-    LBRACKET = 302,                /* LBRACKET  */
-    RBRACKET = 303,                /* RBRACKET  */
-    HASH = 304,                    /* HASH  */
-    DQ = 305,                      /* DQ  */
-    ARR = 306,                     /* ARR  */
-    ARR2D = 307,                   /* ARR2D  */
-    ARR_E = 308,                   /* ARR_E  */
-    FUNC = 309,                    /* FUNC  */
-    TYPE_SPEC = 310,               /* TYPE_SPEC  */
-    FUNC_NAME = 311                /* FUNC_NAME  */
+    NUL = 273,                     /* NUL  */
+    GLOBAL = 274,                  /* GLOBAL  */
+    QM = 275,                      /* QM  */
+    FUNC_C = 276,                  /* FUNC_C  */
+    ID = 277,                      /* ID  */
+    INT_CONST = 278,               /* INT_CONST  */
+    FLOAT_CONST = 279,             /* FLOAT_CONST  */
+    CHAR_CONST = 280,              /* CHAR_CONST  */
+    FUNC_NAME = 281,               /* FUNC_NAME  */
+    STRING_CONST = 282,            /* STRING_CONST  */
+    ARR = 283,                     /* ARR  */
+    ARR_D = 284,                   /* ARR_D  */
+    SIGNED_CONST = 285,            /* SIGNED_CONST  */
+    INT = 286,                     /* INT  */
+    FLOAT = 287,                   /* FLOAT  */
+    CHAR = 288,                    /* CHAR  */
+    IF = 289,                      /* IF  */
+    ELSE = 290,                    /* ELSE  */
+    WHILE = 291,                   /* WHILE  */
+    FOR = 292,                     /* FOR  */
+    RETURN = 293,                  /* RETURN  */
+    BREAK = 294,                   /* BREAK  */
+    CONTINUE = 295,                /* CONTINUE  */
+    CASE = 296,                    /* CASE  */
+    DEFAULT = 297,                 /* DEFAULT  */
+    SWITCH = 298,                  /* SWITCH  */
+    VOID = 299,                    /* VOID  */
+    PRINTF = 300,                  /* PRINTF  */
+    COLON = 301,                   /* COLON  */
+    SEMICOLON = 302,               /* SEMICOLON  */
+    COMMA = 303,                   /* COMMA  */
+    LPAREN = 304,                  /* LPAREN  */
+    RPAREN = 305,                  /* RPAREN  */
+    LBRACE = 306,                  /* LBRACE  */
+    RBRACE = 307,                  /* RBRACE  */
+    LBRACKET = 308,                /* LBRACKET  */
+    RBRACKET = 309,                /* RBRACKET  */
+    HASH = 310,                    /* HASH  */
+    DQ = 311,                      /* DQ  */
+    ARR2D = 312,                   /* ARR2D  */
+    ARR_E = 313,                   /* ARR_E  */
+    TYPE_SPEC = 314                /* TYPE_SPEC  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -131,49 +134,63 @@ extern int yydebug;
 #define DIV 270
 #define MOD 271
 #define NOT 272
-#define STRING_CONST 273
-#define INT_CONST 274
-#define FLOAT_CONST 275
-#define CHAR_CONST 276
-#define SIGNED_CONST 277
-#define INT 278
-#define FLOAT 279
-#define CHAR 280
-#define IF 281
-#define ELSE 282
-#define WHILE 283
-#define FOR 284
-#define RETURN 285
-#define BREAK 286
-#define CONTINUE 287
-#define CASE 288
-#define DEFAULT 289
-#define SWITCH 290
-#define VOID 291
-#define MAIN 292
-#define PRINTF 293
-#define ID 294
-#define COLON 295
-#define SEMICOLON 296
-#define COMMA 297
-#define LPAREN 298
-#define RPAREN 299
-#define LBRACE 300
-#define RBRACE 301
-#define LBRACKET 302
-#define RBRACKET 303
-#define HASH 304
-#define DQ 305
-#define ARR 306
-#define ARR2D 307
-#define ARR_E 308
-#define FUNC 309
-#define TYPE_SPEC 310
-#define FUNC_NAME 311
+#define NUL 273
+#define GLOBAL 274
+#define QM 275
+#define FUNC_C 276
+#define ID 277
+#define INT_CONST 278
+#define FLOAT_CONST 279
+#define CHAR_CONST 280
+#define FUNC_NAME 281
+#define STRING_CONST 282
+#define ARR 283
+#define ARR_D 284
+#define SIGNED_CONST 285
+#define INT 286
+#define FLOAT 287
+#define CHAR 288
+#define IF 289
+#define ELSE 290
+#define WHILE 291
+#define FOR 292
+#define RETURN 293
+#define BREAK 294
+#define CONTINUE 295
+#define CASE 296
+#define DEFAULT 297
+#define SWITCH 298
+#define VOID 299
+#define PRINTF 300
+#define COLON 301
+#define SEMICOLON 302
+#define COMMA 303
+#define LPAREN 304
+#define RPAREN 305
+#define LBRACE 306
+#define RBRACE 307
+#define LBRACKET 308
+#define RBRACKET 309
+#define HASH 310
+#define DQ 311
+#define ARR2D 312
+#define ARR_E 313
+#define TYPE_SPEC 314
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 34 "ast.y"
+
+    int ival;
+    nodeType *nPtr;
+    char string[100];
+
+#line 191 "y.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

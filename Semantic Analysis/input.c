@@ -1,9 +1,7 @@
 void mine(int a, char c, float b)
 {
-    int a = 0, b = 0;
-    yours(a, b);
     float k = 90.90;
-    while(k < 89)
+    while(k < 100.90)
     {
         int f  =99;
         return;
@@ -37,5 +35,7 @@ int main()
 	default:
 		;
 	}
-	int arr[20][20];
+	int arr[20][39];
+	int k = 2*arr[1][i];
+	return 0;
 }

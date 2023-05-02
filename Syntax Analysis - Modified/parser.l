@@ -19,6 +19,7 @@ at [@]
 char \'.\'
 string \".*\"
 %x FUNCTION
+%x ARRAY
 
 %%
 {space}* {}
@@ -47,7 +48,7 @@ printf {if(check_mlc()){inserttoLL("KEYWORD", yytext, line_no);return PRINTF;}}
 
 {alpha}({alpha}|{digit}|{und})* {if(check_mlc()){inserttoLL("IDENTIFIER",yytext,line_no);return ID;}}
 
-[+-][0-9]{digit}*(\.{digit}+)? {if(check_mlc()){inserttoLL("SIGNED CONSTANT", yytext, line_no);return SIGNED_CONST;}}
+[-][0-9]{digit}*(\.{digit}+)? {if(check_mlc()){inserttoLL("SIGNED CONSTANT", yytext, line_no);return SIGNED_CONST;}}
 
 \/\/.* ;
 "/*" {if(check_mlc()){mlcline=line_no;set_mlc();}}
@@ -77,7 +78,7 @@ printf {if(check_mlc()){inserttoLL("KEYWORD", yytext, line_no);return PRINTF;}}
 "/" {if(check_mlc()){inserttoLL("OPERATOR",yytext,line_no);return DIV;}}
 "%" {if(check_mlc()){inserttoLL("OPERATOR",yytext,line_no);return MOD;}}
 
-
+":" {if(check_mlc()){inserttoLL("SPECIAL SYMBOL",yytext,line_no);return COLON;}}
 ";" {if(check_mlc()){inserttoLL("SPECIAL SYMBOL",yytext,line_no);return SEMICOLON;}}
 "," {if(check_mlc()){inserttoLL("SPECIAL SYMBOL",yytext,line_no);return COMMA;}}
 "(" {if(check_mlc()){inserttoLL("SPECIAL SYMBOL",yytext,line_no);return LPAREN;}}
@@ -86,7 +87,7 @@ printf {if(check_mlc()){inserttoLL("KEYWORD", yytext, line_no);return PRINTF;}}
 "}" {if(check_mlc()){inserttoLL("SPECIAL SYMBOL",yytext,line_no);return RBRACE;}}
 "[" {if(check_mlc()){inserttoLL("SPECIAL SYMBOL",yytext,line_no);return LBRACKET;}}
 "]" {if(check_mlc()){inserttoLL("SPECIAL SYMBOL",yytext,line_no);return RBRACKET;}}
-"#" {if(check_mlc()){inserttoLL("SPECIAL SYMBOL",yytext,line_no);return HASH;}}
+"#".* {;}
 "\"" {if(check_mlc()){inserttoLL("SPECIAL SYMBOL",yytext,line_no);return DQ;}}
 
 "%d"|"%f"|"%s"|"%c" {if(check_mlc()){inserttoLL("TYPE_SPEC", yytext, line_no);return TYPE_SPEC;}}
@@ -95,8 +96,23 @@ printf {if(check_mlc()){inserttoLL("KEYWORD", yytext, line_no);return PRINTF;}}
 {digit}+\.{digit}+ {if(check_mlc()){inserttoLL("FLOAT CONSTANT", yytext, line_no);return FLOAT_CONST;}}
 
 {alpha}({alpha}|{digit}|{und})*\[\] {if(check_mlc()){inserttoLL("C ARRAY", yytext, line_no);return ARR_E;}}
-{alpha}({alpha}|{digit}|{und})*\[{digit}*\] {if(check_mlc()){inserttoLL("1D ARRAY", yytext, line_no);return ARR;}}
-{alpha}({alpha}|{digit}|{und})*\[{digit}*\]\[{digit}*\] {if(check_mlc()){inserttoLL("2D ARRAY", yytext, line_no);return ARR2D;}}
+{alpha}({alpha}|{digit})*\[({digit}+)\] {
+                                    for(int i = yyleng - 1;i>=0; i--){
+                                        unput(yytext[i]);
+                                    }
+                                    BEGIN(ARRAY);
+                                    }
+
+{alpha}({alpha}|{digit})*\[({digit}*)\]\[({digit}*)\] {
+                                                    for(int i = yyleng - 1;i>=0; i--){
+                                                        unput(yytext[i]);
+                                                    }
+                                                    BEGIN(ARRAY);
+                                                  }
+
+<ARRAY>{alpha}({alpha}|{digit})* {BEGIN(INITIAL); inserttoLL("ARR", yytext, line_no); return ARR;}
+
+
 {alpha}({alpha}|{digit}|{und})*\(({alpha}|{digit}|{und}|{space}|,)*\) {
                                                     if(check_mlc())
                                                     {
@@ -113,6 +129,7 @@ printf {if(check_mlc()){inserttoLL("KEYWORD", yytext, line_no);return PRINTF;}}
                                     else if(strcmp("printf", yytext)==0){inserttoLL("KEYWORD", yytext, line_no); return PRINTF;}
                                     else if(strcmp("for", yytext)==0){inserttoLL("KEYWORD",yytext, line_no); return FOR;}
                                     else if(strcmp("while", yytext)==0){inserttoLL("KEYWORD", yytext, line_no); return WHILE;}
+                                    else if(strcmp("switch", yytext)==0){inserttoLL("KEYWORD", yytext, line_no); return SWITCH;}
                                     inserttoLL("FUNCTION", yytext, line_no);
                                     return FUNC_NAME;
                                 }

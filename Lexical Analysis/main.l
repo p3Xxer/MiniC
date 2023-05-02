@@ -50,6 +50,7 @@
     #define RETURN 36
     #define PRINTF 37
     #define VOID 38
+    #define COLON 999
 
     /* IDENTIFIER */
     #define ID 39
@@ -158,9 +159,10 @@ printf return PRINTF;
 "%" return MOD;
 
 ";" return SEMICOLON;
+":" return COLON;
 "," return COMMA;
 
-"#include"[ ]*"<stdio.h>" return HEADER;
+"#".* {;}
 
 {digit}+ return INT_CONST;
 {digit}+\.{digit}+ return FLOAT_CONST;
@@ -173,11 +175,10 @@ printf return PRINTF;
 "}" return RBRACE;
 "[" return LBRACKET;
 "]" return RBRACKET;
-"#" return HASH;
 
 {alpha}({alpha}|{digit}|{und})*\[{digit}*\] return ARR;
 {alpha}({alpha}|{digit}|{und})*\[{digit}*\]\[{digit}*\] return ARR2D;
-{alpha}({alpha}|{digit}|{und})*\(({alpha}|{digit}|{und}|{space})*\) {
+{alpha}({alpha}|{digit}|{und})*\(({digit}*"."{digit}*|{alpha}|{digit}|{und}|{space})*\) {
     inserttoLL("FUNC", yytext, line_no);
     REJECT;
     return FUNC;}
@@ -262,7 +263,7 @@ int main(int argc, char *argv[]){
         if(((scan>=4 && scan<=17) || scan==49) && mlc == 0){
             inserttoLL("OPERATOR",yytext,line_no);
         }
-        if(((scan>=18 && scan<=25) || scan==57 || scan ==58) && mlc == 0){
+        if(((scan>=18 && scan<=25) || scan==57 || scan ==58 || scan == 999) && mlc == 0){
             if(scan==57){
                 dq++;
                 dqline = line_no;
@@ -309,44 +310,6 @@ int main(int argc, char *argv[]){
                     break;
 
             }
-            /*
-            if(scan==48 && mlc ==0){
-                inserttoLL("HEADER", yytext, line_no);
-            }
-            if(scan==47 && mlc==0){
-                inserttoLL("IDENTIFIER", yytext, line_no);
-            }
-            if(scan==37 && mlc == 0){
-                inserttoLL("PRE_DEFINED_FUNCTION", yytext, line_no);
-            }
-            if(scan==40 && mlc == 0){
-                inserttoLL("INTEGER CONSTANT", yytext, line_no);
-            }
-            if(scan==41 && mlc==0){
-                inserttoLL("FLOAT CONSTANT", yytext, line_no);
-            }
-            if(scan == 53 && mlc == 0){
-                inserttoLL("TYPE_SPEC", yytext, line_no);
-            }
-            if(scan==54 && mlc==0){
-                inserttoLL("1D ARRAY", yytext, line_no);
-            }
-            if(scan==56 && mlc==0){
-                inserttoLL("2D ARRAY", yytext, line_no);
-            }
-            if(scan==55 && mlc==0){
-                inserttoLL("USER DEFINED FUNCTION", yytext, line_no);
-            }
-            if(scan==50 && mlc == 0){
-                inserttoLL("CHARACTER CONSTANT", yytext, line_no);
-            }
-            if(scan==51 && mlc == 0){
-                inserttoLL("SIGNED CONSTANT", yytext, line_no);
-            }
-            if(scan==52 && mlc == 0){
-                inserttoLL("STRING CONSTANT", yytext, line_no);
-            }
-            */
         }
         scan = yylex();
     }

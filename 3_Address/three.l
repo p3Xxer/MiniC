@@ -23,6 +23,10 @@ string \".*\"
 {char} {yylval.lexeme = strdup(yytext); return CHAR_CONST;}
 {line} {line_no++;}
 
+"#".* {;}
+\/\/.* {;}
+\/\*(.|{line})*\*\/ {for(int i=0; i<strlen(yytext); i++){if(yytext[i] == '\n'){line_no++;}}}
+
 int {yylval.lexeme = strdup(yytext); return INT;}
 float {yylval.lexeme = strdup(yytext); return FLOAT;}
 char {yylval.lexeme = strdup(yytext); return CHAR;}
@@ -61,7 +65,7 @@ printf {yylval.lexeme = strdup(yytext); return PRINTF;}
 "/" {yylval.lexeme = strdup(yytext); return DIV;}yylval.lexeme = strdup(yytext); 
 "%" {yylval.lexeme = strdup(yytext); return MOD;}
 
-
+":" {yylval.lexeme = strdup(yytext); return COLON;}
 ";" {yylval.lexeme = strdup(yytext); return SEMICOLON;}
 "," {yylval.lexeme = strdup(yytext); return COMMA;}
 "(" {yylval.lexeme = strdup(yytext); return LPAREN;}
@@ -70,7 +74,6 @@ printf {yylval.lexeme = strdup(yytext); return PRINTF;}
 "}" {yylval.lexeme = strdup(yytext); return RBRACE;}
 "[" {yylval.lexeme = strdup(yytext); return LBRACKET;}
 "]" {yylval.lexeme = strdup(yytext); return RBRACKET;}
-"#" {yylval.lexeme = strdup(yytext); return HASH;}
 "\"" {yylval.lexeme = strdup(yytext); return DQ;}
 
 "%d"|"%f"|"%s"|"%c" {yylval.lexeme = strdup(yytext); return TYPE_SPEC;}
@@ -94,6 +97,7 @@ printf {yylval.lexeme = strdup(yytext); return PRINTF;}
                                     else if(strcmp("printf", yytext)==0){yylval.lexeme = strdup(yytext);  return PRINTF;}
                                     else if(strcmp("for", yytext)==0){yylval.lexeme = strdup(yytext); return FOR;}
                                     else if(strcmp("while", yytext)==0){yylval.lexeme = strdup(yytext);  return WHILE;}
+                                    else if(strcmp("switch", yytext)==0){yylval.lexeme = strdup(yytext);  return SWITCH;}
                                     yylval.lexeme = strdup(yytext);
                                     yylval.lexeme = strdup(yytext); 
                                     return FUNC_NAME;
